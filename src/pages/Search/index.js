@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-export default function Detail() {
+export default function Search() {
   return (
     <View>
-      <Text>This is Detail!</Text>
+      <Text>This is Search!</Text>
     </View>
   )
 }
