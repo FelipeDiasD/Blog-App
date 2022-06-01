@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StatusBar, StyleSheet } from 'react-native'
 
 import { NavigationContainer } from '@react-navigation/native'
@@ -20,8 +20,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  title: {
-    color: 'white'
   }
 })

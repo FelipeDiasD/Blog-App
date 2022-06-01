@@ -1,34 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-  Touchable
+  FlatList
 } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native'
 
 import { Feather } from '@expo/vector-icons'
 
+import api from '../../services/api'
+
 export default function Home() {
   const navigation = useNavigation()
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    async function loadData() {
+      const category = await api.get('/api/categories?populate=icon')
+      setCategories(categories.data.data)
+    }
+
+    loadData()
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}></Text>
+        <Text style={styles.title}>DevBlog</Text>
 
-        <TouchableOpacity style={styles.button}>
-          <Feather
-            name="search"
-            size={25}
-            color="#FFF"
-            onPress={navigation.navigate('Search')}
-          />
+        <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+          <Feather name="search" size={25} color="#FFF" />
         </TouchableOpacity>
       </View>
+
+      <FlatList
+        style={styles.categories}
+        data={categories}
+        keyExtractor={item => String(item.id)}
+        renderItem={({ item }) => <Text>{item.attributes.name}</Text>}
+      />
     </SafeAreaView>
   )
 }
@@ -45,5 +59,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
     marginTop: 18,
     marginBottom: 24
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#FFF'
   }
 })
