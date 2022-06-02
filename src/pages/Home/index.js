@@ -14,6 +14,8 @@ import { Feather } from '@expo/vector-icons'
 
 import api from '../../services/api'
 
+import CategoryItem from '../../Components/CategoryItem'
+
 export default function Home() {
   const navigation = useNavigation()
   const [categories, setCategories] = useState([])
@@ -21,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     async function loadData() {
       const category = await api.get('/api/categories?populate=icon')
-      setCategories(categories.data.data)
+      setCategories(category.data.data)
     }
 
     loadData()
@@ -41,7 +43,7 @@ export default function Home() {
         style={styles.categories}
         data={categories}
         keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => <Text>{item.attributes.name}</Text>}
+        renderItem={({ item }) => <CategoryItem data = {item} />}
       />
     </SafeAreaView>
   )
