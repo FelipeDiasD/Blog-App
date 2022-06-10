@@ -74,6 +74,7 @@ export default function Home() {
 
       <FlatList
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingRight: 12 }}
         style={styles.categories}
         data={categories}
