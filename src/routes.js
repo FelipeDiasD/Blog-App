@@ -33,18 +33,20 @@ function Routes() {
         name="CategoryPosts"
         component={CategoryPosts}
         options={{
-          headerTintoColor: '#FFF',
+          title: 'Categoria',
+          headerTintColor: '#FFF',
           headerStyle: {
             backgroundColor: '#232630'
           }
-        }}
+          }
+        }
       />
       <Stack.Screen
         name="Search"
         component={Search}
         options={{
           title: 'Procurando algo?',
-          headerTintoColor: 'white',
+          headerTintColor: '#FFF',
           headerStyle: {
             backgroundColor: '#232630'
           }

@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Share
+  Share,
+  Modal
 } from 'react-native'
 
 import api from '../../services/api'
@@ -15,6 +16,8 @@ import api from '../../services/api'
 import { Feather, Entypo } from '@expo/vector-icons'
 
 import { useNavigation, useRoute } from '@react-navigation/native'
+
+import LinkWeb from '../../Components/LinkWeb'
 
 export default function Detail() {
   const route = useRoute()
@@ -99,13 +102,21 @@ export default function Detail() {
           <TouchableOpacity
             key={link.id}
             style={styles.linkButton}
-            onPress={handleOpenLink(link)}
+            onPress={() => handleOpenLink(link)}
           >
             <Feather name="link" color="#1e4687" size={14} />
             <Text style={styles.linkText}>{link.name}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
+
+      <Modal animationType="fade" visible={modalVisible} transparent={true}>
+        <LinkWeb
+          link={openLink?.url}
+          title={openLink?.name}
+          closeModal={() => setModalVisible(false)}
+        />
+      </Modal>
     </SafeAreaView>
   )
 }
