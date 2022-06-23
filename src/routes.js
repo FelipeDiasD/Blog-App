@@ -5,12 +5,28 @@ import Home from './pages/Home'
 import Detail from './pages/Detail'
 import CategoryPosts from './pages/CategoryPosts'
 import Search from './pages/Search'
+import Login from './pages/Login'
+import NewUser from './pages/NewUser'
 
 const Stack = createNativeStackNavigator()
 
 function Routes() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+        name="NewUser"
+        component={NewUser}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          headerShown: false
+        }}
+      />
       <Stack.Screen
         name="Home"
         component={Home}
@@ -38,8 +54,7 @@ function Routes() {
           headerStyle: {
             backgroundColor: '#232630'
           }
-          }
-        }
+        }}
       />
       <Stack.Screen
         name="Search"
