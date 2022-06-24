@@ -6,10 +6,13 @@ import {
   TextInput,
   KeyboardAvoidingView,
   StyleSheet,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native'
 
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import firebaseApp from '../../config/firebase.js'
+
 import { Feather } from '@expo/vector-icons'
 
 export default function Login({ navigation }) {
@@ -17,7 +20,27 @@ export default function Login({ navigation }) {
   const [senha, setSenha] = useState('')
   const [errorLogin, setErrorLogin] = useState('')
 
-  const loginFirebase = () => {}
+  const auth = getAuth()
+
+  const loginFirebase = () => {
+    signInWithEmailAndPassword(auth, email, senha)
+      .then(userCredential => {
+        // Signed in
+        const user = userCredential.user
+        navigation.navigation('Home', { email: user.email })
+        // ...
+      })
+      .catch(error => {
+        setErrorLogin(true)
+        const errorCode = error.code
+        const errorMessage = error.message
+        // ..
+      })
+
+    setEmail('')
+    setSenha('')
+    Keyboard.dismiss()
+  }
 
   useEffect(() => {}, [])
 
@@ -29,7 +52,7 @@ export default function Login({ navigation }) {
       <Text style={styles.title}>Blog App</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter your e-mail"
+        placeholder="Insira seu e-mail"
         type="text"
         onChangeText={text => setEmail(text)}
         value={email}
@@ -37,7 +60,7 @@ export default function Login({ navigation }) {
       <TextInput
         style={styles.input}
         secureTextEntry={true}
-        placeholder="Enter your password"
+        placeholder="Insira sua senha"
         type="text"
         onChangeText={text => setSenha(text)}
         value={senha}
@@ -45,29 +68,29 @@ export default function Login({ navigation }) {
       {errorLogin === true ? (
         <View style={styles.contentAlert}>
           <Feather name="alert-circle" size={24} color="#C4C4C4" />
-          <Text style={styles.warningAlert}> Invalida e-mail or password</Text>
+          <Text style={styles.warningAlert}>E-mail ou senha inválida</Text>
         </View>
       ) : (
         <View />
       )}
 
       {email === '' || senha === '' ? (
-        <TouchableOpacity disabled={true} style={styles.buttonLogin}>
-          <Text style={styles.textButtonLogin}>Login</Text>
+        <TouchableOpacity disabled={true} style={styles.buttonLoginDisabled}>
+          <Text style={styles.textButtonLogin}>Entrar</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.buttonLogin}>
-          <Text style={styles.textButtonLogin}>Login</Text>
+        <TouchableOpacity style={styles.buttonLogin} onPress={loginFirebase}>
+          <Text style={styles.textButtonLogin}>Entrar</Text>
         </TouchableOpacity>
       )}
 
       <Text style={styles.registration}>
-        Don't have a registration yet?
+        Ainda não tem uma conta?
         <Text
           style={styles.linkSubscribe}
           onPress={() => navigation.navigate('NewUser')}
         >
-          Subscribe now...
+          Crie uma agora...
         </Text>
       </Text>
 
@@ -105,6 +128,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#232630',
+    borderRadius: 36,
+    marginTop: 30
+  },
+
+  buttonLoginDisabled: {
+    width: 200,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#C4C4C4',
     borderRadius: 36,
     marginTop: 30
   },

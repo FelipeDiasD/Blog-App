@@ -1,4 +1,5 @@
 import firebase from 'firebase/compat/app'
+
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyAUp5jqgxDnNTSHA8BkcV05tp-4xDtDnyM',
