@@ -3,7 +3,7 @@
 A simple blog app created with react native
 
 - Screens created 🆗
-- Screen details 🛠️
+- Screen details 🆗
 - Navigation 🆗
-- Search topic 🛠️
+- Search topic 🆗
 - Final tweaks 🛠️
